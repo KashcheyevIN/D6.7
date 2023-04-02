@@ -62,7 +62,7 @@ class Post(models.Model):
         self.save()
 
     def preview(self):
-        return self.post_text[0:123] + '...'
+        return self.post_text[0:40] + '...'
 
     def get_absolute_url(self):
         return reverse('post_detail', args=[str(self.id)])
@@ -99,3 +99,15 @@ class Comment(models.Model):
     class Meta:
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
+
+    class Subscription(models.Model):
+        user = models.ForeignKey(
+            to=User,
+            on_delete=models.CASCADE,
+            related_name='subscriptions',
+        )
+        category = models.ForeignKey(
+            to='Category',
+            on_delete=models.CASCADE,
+            related_name='subscriptions',
+        )
